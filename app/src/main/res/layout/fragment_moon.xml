@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.notifications.MoonFragment">
+
+    <TextView
+        android:id="@+id/text_altitude_moon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+
+        />
+
+    <TextView
+        android:id="@+id/text_latitude_moon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_altitude_moon"
+
+        />
+
+    <TextView
+        android:id="@+id/text_device_time_moon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_latitude_moon"
+
+        />
+
+    <TextView
+        android:id="@+id/text_moon_rise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_device_time_moon"
+
+        />
+
+    <TextView
+        android:id="@+id/text_moon_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_moon_rise"
+
+        />
+
+    <TextView
+        android:id="@+id/text_new_moon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_moon_set"
+
+        />
+
+    <TextView
+        android:id="@+id/text_full_moon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_new_moon"
+
+        />
+
+    <TextView
+        android:id="@+id/text_moon_phase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_full_moon"
+
+        />
+
+    <TextView
+        android:id="@+id/text_day_of_sonodic_mounth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_full_moon"
+
+        />
+
+
+</RelativeLayout>

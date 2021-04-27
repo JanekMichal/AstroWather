@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.dashboard.SunFragment">
+
+    <TextView
+        android:id="@+id/text_altitude_sun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+
+        />
+
+    <TextView
+        android:id="@+id/text_latitude_sun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_altitude_sun"
+
+        />
+
+    <TextView
+        android:id="@+id/text_device_time_sun"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_latitude_sun"
+
+        />
+
+    <TextView
+        android:id="@+id/text_sun_rise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_device_time_sun"
+
+        />
+
+    <TextView
+        android:id="@+id/text_sun_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_sun_rise"
+
+        />
+
+    <TextView
+        android:id="@+id/text_sun_rise_azimuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_sun_set"
+
+        />
+
+    <TextView
+        android:id="@+id/text_sun_set_azimuth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_sun_rise_azimuth"
+
+        />
+
+    <TextView
+        android:id="@+id/text_sun_civil_dawn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_sun_set_azimuth"
+
+        />
+
+    <TextView
+        android:id="@+id/text_sun_civil_twilight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_sun_civil_dawn"
+
+        />
+
+
+</RelativeLayout>
