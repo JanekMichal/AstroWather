@@ -72,15 +72,15 @@ public class AstronomyCalculator {
     }
 
     public String getNextNewMoon() {
-        return astroCalculator.getMoonInfo().getNextNewMoon().toString();
+        return trimGMT(astroCalculator.getMoonInfo().getNextNewMoon().toString());
     }
 
     public String getNextFullMoon() {
-        return astroCalculator.getMoonInfo().getNextFullMoon().toString();
+        return trimGMT(astroCalculator.getMoonInfo().getNextFullMoon().toString());
     }
 
     public double getMoonPhase() {
-        return astroCalculator.getMoonInfo().getAge();
+        return astroCalculator.getMoonInfo().getIllumination() * 100;
     }
 
     public void getNumberOfSonodicMounthDay() {

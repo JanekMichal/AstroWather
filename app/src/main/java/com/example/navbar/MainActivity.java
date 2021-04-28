@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public static AstronomyCalculator astronomyCalculator;
     public static double latitude = 0.0, altitude = 0.0;
     private boolean isLocationSet = false;
+    public static Double refreshRate = 1.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,5 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
     public double getAltitude() {
         return altitude;
+    }
+
+    public static void setRefreshRate(double refreshRate) {
+        MainActivity.refreshRate = refreshRate;
     }
 }
