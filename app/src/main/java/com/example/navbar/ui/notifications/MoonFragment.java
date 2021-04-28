@@ -52,6 +52,21 @@ public class MoonFragment extends Fragment {
         dayOfSonodicMonthTextView = root.findViewById(R.id.text_day_of_sonodic_mounth);
 
 
+        moonViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                if (MainActivity.astronomyCalculator == null) {
+                    moonRiseTextView.setText("First, provide information about your localization in settings section");
+                } else {
+                    updateTime();
+                    updateMoonInfo();
+                }
+            }
+        });
+        return root;
+    }
+
+    public void runTimers() {
         Handler timeHandler = new Handler();
         Runnable updateTime = new Runnable() {
             @Override
@@ -71,20 +86,8 @@ public class MoonFragment extends Fragment {
             }
         };
         handler.postDelayed(updateTask, MainActivity.refreshRate.longValue() * 1000);
-
-        moonViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                if (MainActivity.astronomyCalculator == null) {
-                    moonRiseTextView.setText("First, provide information about your localization in settings section");
-                } else {
-                    updateTime();
-                    updateMoonInfo();
-                }
-            }
-        });
-        return root;
     }
+
     public void updateTime() {
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         deviceTimeMoonTextView.setText("Device time: " + currentTime);
@@ -100,7 +103,7 @@ public class MoonFragment extends Fragment {
         moonSetTextView.setText("Moon set: " + MainActivity.astronomyCalculator.getMoonSetInfo());
         newMoonTextView.setText("Next new moon: " + MainActivity.astronomyCalculator.getNextNewMoon());
         fullMoonTextView.setText("Next full moon: " + MainActivity.astronomyCalculator.getNextFullMoon());
-        moonPhaseTextView.setText("Moon phase: " + (int)MainActivity.astronomyCalculator.getMoonPhase() + "%");
+        moonPhaseTextView.setText("Moon phase: " + (int) MainActivity.astronomyCalculator.getMoonPhase() + "%");
         //dayOfSonodicMonthTextView.setText("Day of Sonodic month " + MainActivity.astronomyCalculator.;
     }
 }

@@ -57,6 +57,22 @@ public class SunFragment extends Fragment {
         sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn);
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
+        sunViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                if (MainActivity.astronomyCalculator == null) {
+                    sunRiseTextView.setText("First, provide information about your localization in Settings section");
+                } else {
+                    runTimers();
+                    updateTime();
+                    updateSunInfo();
+                }
+            }
+        });
+        return root;
+    }
+
+    public void runTimers() {
         Handler timeHandler = new Handler();
         Runnable updateTime = new Runnable() {
             @Override
@@ -76,21 +92,7 @@ public class SunFragment extends Fragment {
             }
         };
         handler.postDelayed(updateTask, MainActivity.refreshRate.longValue() * 1000);
-
-        sunViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                if (MainActivity.astronomyCalculator == null) {
-                    sunRiseTextView.setText("First, provide information about your localization in Settings section");
-                } else {
-                    updateTime();
-                    updateSunInfo();
-                }
-            }
-        });
-        return root;
     }
-
     public void updateTime() {
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         deviceTimeSunTextView.setText("Device time: " + currentTime);
