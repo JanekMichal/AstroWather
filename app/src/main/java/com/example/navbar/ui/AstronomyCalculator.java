@@ -23,7 +23,7 @@ public class AstronomyCalculator {
                 LocalDateTime.now().getYear(),
                 LocalDateTime.now().getMonthValue(),
                 //TODO: zrobić automatyczne wybieranie strefy czasowej
-                LocalDateTime.now().getDayOfMonth() + 1,
+                LocalDateTime.now().getDayOfMonth(),
                 LocalDateTime.now().getHour(),
                 LocalDateTime.now().getMinute(),
                 LocalDateTime.now().getSecond(),
@@ -35,10 +35,22 @@ public class AstronomyCalculator {
     }
 
     public String getSunRiseInfo() {
+        return astroCalculator.getSunInfo().getSunrise().getHour() + ":" +
+                astroCalculator.getSunInfo().getSunrise().getMinute() + ":" +
+                astroCalculator.getSunInfo().getSunrise().getSecond();
+    }
+
+    public String getSunRiseInfoWithDay() {
         return trimGMT(astroCalculator.getSunInfo().getSunrise().toString());
     }
 
     public String getSunSetInfo() {
+        return astroCalculator.getSunInfo().getSunset().getHour() + ":" +
+                astroCalculator.getSunInfo().getSunset().getMinute() + ":" +
+                astroCalculator.getSunInfo().getSunset().getSecond();
+    }
+
+    public String getSunSetInfoWithDay() {
         return trimGMT(astroCalculator.getSunInfo().getSunset().toString());
     }
 
@@ -51,10 +63,22 @@ public class AstronomyCalculator {
     }
 
     public String getCivilTwilightMorning() {
+        return astroCalculator.getSunInfo().getTwilightMorning().getHour() + ":" +
+                astroCalculator.getSunInfo().getTwilightMorning().getMinute() + ":" +
+                astroCalculator.getSunInfo().getTwilightMorning().getMinute();
+    }
+
+    public String getCivilTwilightMorningWithDay() {
         return trimGMT(astroCalculator.getSunInfo().getTwilightMorning().toString());
     }
 
     public String getCivilTwilightEvening() {
+        return astroCalculator.getSunInfo().getTwilightEvening().getHour() + ":" +
+                astroCalculator.getSunInfo().getTwilightEvening().getMinute() + ":" +
+                astroCalculator.getSunInfo().getTwilightEvening().getMinute();
+    }
+
+    public String getCivilTwilightEveningWithDay() {
         return trimGMT(astroCalculator.getSunInfo().getTwilightEvening().toString());
     }
 
@@ -64,10 +88,22 @@ public class AstronomyCalculator {
     }
 
     public String getMoonRiseInfo() {
+        return astroCalculator.getMoonInfo().getMoonrise().getHour() + ":" +
+                astroCalculator.getMoonInfo().getMoonrise().getMinute() + ":" +
+                astroCalculator.getMoonInfo().getMoonrise().getSecond();
+    }
+
+    public String getMoonRiseInfoWithDay() {
         return trimGMT(astroCalculator.getMoonInfo().getMoonrise().toString());
     }
 
     public String getMoonSetInfo() {
+        return astroCalculator.getMoonInfo().getMoonset().getHour() + ":" +
+                astroCalculator.getMoonInfo().getMoonset().getMinute() + ":" +
+                astroCalculator.getMoonInfo().getMoonset().getSecond();
+    }
+
+    public String getMoonSetInfoWithDay() {
         return trimGMT(astroCalculator.getMoonInfo().getMoonset().toString());
     }
 
@@ -81,10 +117,6 @@ public class AstronomyCalculator {
 
     public double getMoonPhase() {
         return astroCalculator.getMoonInfo().getIllumination() * 100;
-    }
-
-    public void getNumberOfSonodicMounthDay() {
-       //TODO: dowiedzieć się co to ma niby być XD
     }
 
     public double getAltitude() {

@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/blue_background"
-    tools:context=".ui.home.SettingsFragment"
-     >
+    tools:context=".ui.home.SettingsFragment">
 
 
     <TextView
         android:id="@+id/text_settings"
         style="@style/light_text"
-        android:layout_width="match_parent"
+        android:layout_width="500dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/enter_your_co_ordinates"
@@ -22,7 +22,8 @@
         android:id="@+id/edit_text_latitude"
         style="@style/light_text"
 
-        android:layout_width="match_parent"
+        android:layout_width="500dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_settings"
         android:layout_marginTop="30dp"
@@ -32,7 +33,8 @@
     <EditText
         android:id="@+id/edit_text_altitude"
         style="@style/light_text"
-        android:layout_width="match_parent"
+        android:layout_width="500dp"
+        android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_text_latitude"
         android:layout_marginTop="10dp"

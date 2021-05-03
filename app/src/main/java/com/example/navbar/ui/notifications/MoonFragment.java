@@ -17,7 +17,6 @@ import com.example.navbar.MainActivity;
 import com.example.navbar.R;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -42,22 +41,21 @@ public class MoonFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_moon, container, false);
 
         deviceTimeMoonTextView = root.findViewById(R.id.text_device_time_moon);
-        altitudeMoonTextView = root.findViewById(R.id.text_altitude_moon);
-        latitudeMoonTextView = root.findViewById(R.id.text_latitude_moon);
-        moonRiseTextView = root.findViewById(R.id.text_moon_rise);
-        moonSetTextView = root.findViewById(R.id.text_moon_set);
-        newMoonTextView = root.findViewById(R.id.text_new_moon);
-        fullMoonTextView = root.findViewById(R.id.text_full_moon);
-        moonPhaseTextView = root.findViewById(R.id.text_moon_phase);
-        dayOfSonodicMonthTextView = root.findViewById(R.id.text_day_of_sonodic_mounth);
-
+        altitudeMoonTextView = root.findViewById(R.id.text_altitude_moon_value);
+        latitudeMoonTextView = root.findViewById(R.id.text_latitude_moon_value);
+        moonRiseTextView = root.findViewById(R.id.text_moon_rise_value);
+        moonSetTextView = root.findViewById(R.id.text_moon_set_value);
+        newMoonTextView = root.findViewById(R.id.text_new_moon_value);
+        fullMoonTextView = root.findViewById(R.id.text_full_moon_value);
+        moonPhaseTextView = root.findViewById(R.id.text_moon_phase_value);
 
         moonViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 if (MainActivity.astronomyCalculator == null) {
-                    moonRiseTextView.setText("First, provide information about your localization in settings section");
+                    deviceTimeMoonTextView.setText(R.string.settings_not_set);
                 } else {
+                    runTimers();
                     updateTime();
                     updateMoonInfo();
                 }
@@ -94,16 +92,16 @@ public class MoonFragment extends Fragment {
     }
 
     public void updateMoonInfo() {
-        altitudeMoonTextView.setText("Altitude: " + MainActivity.astronomyCalculator.getAltitude());
-        latitudeMoonTextView.setText("Latitude: " + MainActivity.astronomyCalculator.getLatitude());
+        altitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
+        latitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
 
-        moonRiseTextView.setText("Moon rise: " + MainActivity.astronomyCalculator.getMoonRiseInfo());
-        moonSetTextView.setText("Moon set: " + MainActivity.astronomyCalculator.getMoonSetInfo());
-        moonRiseTextView.setText("Moon rise: " + MainActivity.astronomyCalculator.getMoonRiseInfo());
-        moonSetTextView.setText("Moon set: " + MainActivity.astronomyCalculator.getMoonSetInfo());
-        newMoonTextView.setText("Next new moon: " + MainActivity.astronomyCalculator.getNextNewMoon());
-        fullMoonTextView.setText("Next full moon: " + MainActivity.astronomyCalculator.getNextFullMoon());
-        moonPhaseTextView.setText("Moon phase: " + (int) MainActivity.astronomyCalculator.getMoonPhase() + "%");
+        moonRiseTextView.setText(MainActivity.astronomyCalculator.getMoonRiseInfo());
+        moonSetTextView.setText(MainActivity.astronomyCalculator.getMoonSetInfo());
+        moonRiseTextView.setText(MainActivity.astronomyCalculator.getMoonRiseInfo());
+        moonSetTextView.setText(MainActivity.astronomyCalculator.getMoonSetInfo());
+        newMoonTextView.setText(MainActivity.astronomyCalculator.getNextNewMoon());
+        fullMoonTextView.setText(MainActivity.astronomyCalculator.getNextFullMoon());
+        moonPhaseTextView.setText((int) MainActivity.astronomyCalculator.getMoonPhase() + "%");
         //dayOfSonodicMonthTextView.setText("Day of Sonodic month " + MainActivity.astronomyCalculator.;
     }
 }

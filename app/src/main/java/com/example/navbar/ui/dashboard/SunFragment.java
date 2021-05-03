@@ -16,10 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -45,23 +42,23 @@ public class SunFragment extends Fragment {
 
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        deviceTimeSunTextView = root.findViewById(R.id.text_device_time_sun);
-        altitudeSunTextView = root.findViewById(R.id.text_altitude_sun);
-        latitudeSunTextView = root.findViewById(R.id.text_latitude_sun);
+        deviceTimeSunTextView = root.findViewById(R.id.text_device_time_sun_value);
+        altitudeSunTextView = root.findViewById(R.id.text_altitude_sun_value);
+        latitudeSunTextView = root.findViewById(R.id.text_latitude_sun_value);
 
-        sunRiseTextView = root.findViewById(R.id.text_sun_rise);
-        sunSetTextView = root.findViewById(R.id.text_sun_set);
-        sunRiseAzimuthTextView = root.findViewById(R.id.text_sun_rise_azimuth);
-        sunSetAzimuthTextView = root.findViewById(R.id.text_sun_set_azimuth);
-        sunCivilTwilight = root.findViewById(R.id.text_sun_civil_twilight);
-        sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn);
+        sunRiseTextView = root.findViewById(R.id.text_sun_rise_value);
+        sunSetTextView = root.findViewById(R.id.text_sun_set_value);
+        sunRiseAzimuthTextView = root.findViewById(R.id.text_sun_rise_azimuth_value);
+        sunSetAzimuthTextView = root.findViewById(R.id.text_sun_set_azimuth_value);
+        sunCivilTwilight = root.findViewById(R.id.text_sun_civil_twilight_value);
+        sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn_value);
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
         sunViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 if (MainActivity.astronomyCalculator == null) {
-                    sunRiseTextView.setText("First, provide information about your localization in Settings section");
+                    deviceTimeSunTextView.setText(R.string.settings_not_set);
                 } else {
                     runTimers();
                     updateTime();
@@ -93,6 +90,7 @@ public class SunFragment extends Fragment {
         };
         handler.postDelayed(updateTask, MainActivity.refreshRate.longValue() * 1000);
     }
+
     public void updateTime() {
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         deviceTimeSunTextView.setText("Device time: " + currentTime);
@@ -100,14 +98,13 @@ public class SunFragment extends Fragment {
 
     public void updateSunInfo() {
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        deviceTimeSunTextView.setText("Device time: " + currentTime);
-        altitudeSunTextView.setText("Altitude: " + MainActivity.astronomyCalculator.getAltitude());
-        latitudeSunTextView.setText("Latitude: " + MainActivity.astronomyCalculator.getLatitude());
-        sunRiseTextView.setText("Sun rise: " + MainActivity.astronomyCalculator.getSunRiseInfo());
-        sunSetTextView.setText("Sun set: " + MainActivity.astronomyCalculator.getSunSetInfo());
-        sunRiseAzimuthTextView.setText("Sun rise azimuth: " + MainActivity.astronomyCalculator.getSunRiseAzimuthInfo());
-        sunSetAzimuthTextView.setText("Sun rise azimuth: " + MainActivity.astronomyCalculator.getSunSetAzimuthInfo());
-        sunCivilTwilight.setText("Sun civil Twilight: " + MainActivity.astronomyCalculator.getCivilTwilightMorning());
-        sunCivilDawn.setText("Sun civil Dawn: " + MainActivity.astronomyCalculator.getCivilTwilightEvening());
+        altitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
+        latitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
+        sunRiseTextView.setText(MainActivity.astronomyCalculator.getSunRiseInfo());
+        sunSetTextView.setText(MainActivity.astronomyCalculator.getSunSetInfo());
+        sunRiseAzimuthTextView.setText("" + MainActivity.astronomyCalculator.getSunRiseAzimuthInfo());
+        sunSetAzimuthTextView.setText("" + MainActivity.astronomyCalculator.getSunSetAzimuthInfo());
+        sunCivilTwilight.setText(MainActivity.astronomyCalculator.getCivilTwilightMorning());
+        sunCivilDawn.setText(MainActivity.astronomyCalculator.getCivilTwilightEvening());
     }
 }

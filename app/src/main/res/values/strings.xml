@@ -3,4 +3,29 @@
     <string name="title_settings">Settings</string>
     <string name="title_sun">Sun</string>
     <string name="title_moon">Moon</string>
+    <string name="latitude">Latitude:</string>
+    <string name="altitude">Altitude:</string>
+    <string name="device_time">Device time:</string>
+    <string name="sun_rise">Sun rise:</string>
+    <string name="sun_set">Sun set:</string>
+    <string name="sun_rise_azimuth">Sun rise azimuth:</string>
+    <string name="sun_civil_dawn">Sun civil dawn:</string>
+    <string name="sun_civil_twilight">Sun civil twilight:</string>
+    <string name="settings_not_set">First, provide information about your localization in Settings section</string>
+    <string name="moon_rise">Moon rise:</string>
+    <string name="moon_set">Moon set:</string>
+    <string name="next_new_moon">Next new moon:</string>
+    <string name="next_full_moon">Next full moon:</string>
+    <string name="moon_phase">Moon phase:</string>
+    <string name="confirm">Confirm</string>
+    <string name="enter_your_co_ordinates">Enter your co-ordinates:</string>
+    <string name="use_default">Use Default</string>
+
+    <string-array name="time_array">
+        <item>Select refresh time</item>
+        <item>15 min</item>
+        <item>30 min</item>
+        <item>45 min</item>
+        <item>1 hour</item>
+    </string-array>
 </resources>
