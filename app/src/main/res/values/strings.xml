@@ -20,6 +20,7 @@
     <string name="confirm">Confirm</string>
     <string name="enter_your_co_ordinates">Enter your co-ordinates:</string>
     <string name="use_default">Use Default</string>
+    <string name="moon_and_sun">Moon and Sun</string>
 
     <string-array name="time_array">
         <item>Select refresh time</item>

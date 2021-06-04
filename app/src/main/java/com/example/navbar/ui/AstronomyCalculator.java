@@ -1,16 +1,9 @@
 package com.example.navbar.ui;
 
-import android.util.Log;
-
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 public class AstronomyCalculator {
     private AstroCalculator astroCalculator;
@@ -22,7 +15,6 @@ public class AstronomyCalculator {
         AstroDateTime astroDateTime = new AstroDateTime(
                 LocalDateTime.now().getYear(),
                 LocalDateTime.now().getMonthValue(),
-                //TODO: zrobić automatyczne wybieranie strefy czasowej
                 LocalDateTime.now().getDayOfMonth(),
                 LocalDateTime.now().getHour(),
                 LocalDateTime.now().getMinute(),

@@ -4,20 +4,17 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.example.navbar.ui.AstronomyCalculator;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+
+import com.example.navbar.ui.AstronomyCalculator;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-
+        //default co-ordinates
+        astronomyCalculator = new AstronomyCalculator(51.77665, 19.45303);
     }
 
     public void buttonConfirmSettingsClick(View view) {
@@ -65,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void useDefaultCoordinates(View view) {
         //Łódź
-        latitude = 19.45303173904975;
-        altitude = 51.776659378890685;
+        latitude = 19.45303;
+        altitude = 51.77665;
 
         //Gdańsk
         //latitude = 18.596496032411604;

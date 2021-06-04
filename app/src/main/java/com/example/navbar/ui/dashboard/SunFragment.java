@@ -27,12 +27,22 @@ public class SunFragment extends Fragment {
     TextView deviceTimeSunTextView;
     TextView altitudeSunTextView;
     TextView latitudeSunTextView;
+
     TextView sunRiseTextView;
     TextView sunSetTextView;
     TextView sunRiseAzimuthTextView;
     TextView sunSetAzimuthTextView;
     TextView sunCivilTwilight;
     TextView sunCivilDawn;
+
+    TextView altitudeMoonTextView;
+    TextView latitudeMoonTextView;
+    TextView moonRiseTextView;
+    TextView moonSetTextView;
+    TextView newMoonTextView;
+    TextView fullMoonTextView;
+    TextView moonPhaseTextView;
+
     String currentTime;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +55,14 @@ public class SunFragment extends Fragment {
         deviceTimeSunTextView = root.findViewById(R.id.text_device_time_sun_value);
         altitudeSunTextView = root.findViewById(R.id.text_altitude_sun_value);
         latitudeSunTextView = root.findViewById(R.id.text_latitude_sun_value);
+
+        altitudeMoonTextView = root.findViewById(R.id.text_altitude_moon_value);
+        latitudeMoonTextView = root.findViewById(R.id.text_latitude_moon_value);
+        moonRiseTextView = root.findViewById(R.id.text_moon_rise_value);
+        moonSetTextView = root.findViewById(R.id.text_moon_set_value);
+        newMoonTextView = root.findViewById(R.id.text_new_moon_value);
+        fullMoonTextView = root.findViewById(R.id.text_full_moon_value);
+        moonPhaseTextView = root.findViewById(R.id.text_moon_phase_value);
 
         sunRiseTextView = root.findViewById(R.id.text_sun_rise_value);
         sunSetTextView = root.findViewById(R.id.text_sun_set_value);
@@ -93,18 +111,39 @@ public class SunFragment extends Fragment {
 
     public void updateTime() {
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        deviceTimeSunTextView.setText("Device time: " + currentTime);
+        deviceTimeSunTextView.setText(currentTime);
     }
 
     public void updateSunInfo() {
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
-        altitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
-        latitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
+
+        if (altitudeSunTextView != null) {
+            altitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
+            latitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
+        }
+
+
+
         sunRiseTextView.setText(MainActivity.astronomyCalculator.getSunRiseInfo());
         sunSetTextView.setText(MainActivity.astronomyCalculator.getSunSetInfo());
         sunRiseAzimuthTextView.setText("" + MainActivity.astronomyCalculator.getSunRiseAzimuthInfo());
         sunSetAzimuthTextView.setText("" + MainActivity.astronomyCalculator.getSunSetAzimuthInfo());
         sunCivilTwilight.setText(MainActivity.astronomyCalculator.getCivilTwilightMorning());
         sunCivilDawn.setText(MainActivity.astronomyCalculator.getCivilTwilightEvening());
+
+        if(moonRiseTextView != null) {
+
+            altitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
+            latitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
+            moonRiseTextView.setText(MainActivity.astronomyCalculator.getMoonRiseInfo());
+            moonSetTextView.setText(MainActivity.astronomyCalculator.getMoonSetInfo());
+            moonRiseTextView.setText(MainActivity.astronomyCalculator.getMoonRiseInfo());
+            moonSetTextView.setText(MainActivity.astronomyCalculator.getMoonSetInfo());
+            newMoonTextView.setText(MainActivity.astronomyCalculator.getNextNewMoon());
+            fullMoonTextView.setText(MainActivity.astronomyCalculator.getNextFullMoon());
+            moonPhaseTextView.setText((int) MainActivity.astronomyCalculator.getMoonPhase() + "%");
+        }
+
+
     }
 }
