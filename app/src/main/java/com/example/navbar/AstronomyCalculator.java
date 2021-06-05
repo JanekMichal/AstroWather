@@ -1,4 +1,4 @@
-package com.example.navbar.ui;
+package com.example.navbar;
 
 import com.astrocalculator.AstroCalculator;
 import com.astrocalculator.AstroDateTime;
@@ -32,19 +32,12 @@ public class AstronomyCalculator {
                 astroCalculator.getSunInfo().getSunrise().getSecond();
     }
 
-    public String getSunRiseInfoWithDay() {
-        return trimGMT(astroCalculator.getSunInfo().getSunrise().toString());
-    }
-
     public String getSunSetInfo() {
         return astroCalculator.getSunInfo().getSunset().getHour() + ":" +
                 astroCalculator.getSunInfo().getSunset().getMinute() + ":" +
                 astroCalculator.getSunInfo().getSunset().getSecond();
     }
 
-    public String getSunSetInfoWithDay() {
-        return trimGMT(astroCalculator.getSunInfo().getSunset().toString());
-    }
 
     public double getSunRiseAzimuthInfo() {
         return astroCalculator.getSunInfo().getAzimuthRise();
@@ -60,18 +53,10 @@ public class AstronomyCalculator {
                 astroCalculator.getSunInfo().getTwilightMorning().getMinute();
     }
 
-    public String getCivilTwilightMorningWithDay() {
-        return trimGMT(astroCalculator.getSunInfo().getTwilightMorning().toString());
-    }
-
     public String getCivilTwilightEvening() {
         return astroCalculator.getSunInfo().getTwilightEvening().getHour() + ":" +
                 astroCalculator.getSunInfo().getTwilightEvening().getMinute() + ":" +
                 astroCalculator.getSunInfo().getTwilightEvening().getMinute();
-    }
-
-    public String getCivilTwilightEveningWithDay() {
-        return trimGMT(astroCalculator.getSunInfo().getTwilightEvening().toString());
     }
 
     public String trimGMT(String info) {
@@ -85,18 +70,10 @@ public class AstronomyCalculator {
                 astroCalculator.getMoonInfo().getMoonrise().getSecond();
     }
 
-    public String getMoonRiseInfoWithDay() {
-        return trimGMT(astroCalculator.getMoonInfo().getMoonrise().toString());
-    }
-
     public String getMoonSetInfo() {
         return astroCalculator.getMoonInfo().getMoonset().getHour() + ":" +
                 astroCalculator.getMoonInfo().getMoonset().getMinute() + ":" +
                 astroCalculator.getMoonInfo().getMoonset().getSecond();
-    }
-
-    public String getMoonSetInfoWithDay() {
-        return trimGMT(astroCalculator.getMoonInfo().getMoonset().toString());
     }
 
     public String getNextNewMoon() {

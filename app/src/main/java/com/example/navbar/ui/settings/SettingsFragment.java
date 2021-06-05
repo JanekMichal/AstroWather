@@ -1,4 +1,4 @@
-package com.example.navbar.ui.home;
+package com.example.navbar.ui.settings;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
-import com.example.navbar.ui.notifications.MoonViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

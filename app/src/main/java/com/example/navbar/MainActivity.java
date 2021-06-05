@@ -13,38 +13,48 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.navbar.ui.AstronomyCalculator;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
     public static AstronomyCalculator astronomyCalculator;
     public static double latitude = 0.0, altitude = 0.0;
     public static Double refreshRate = 60.0 * 60.0; //1 godzina
+    public static AdvancedWeather advancedWeather;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
 
-        //default co-ordinates
-        astronomyCalculator = new AstronomyCalculator(51.77665, 19.45303);
+
     }
 
+
     public void buttonConfirmSettingsClick(View view) {
-        EditText latitudeEditText = findViewById(R.id.edit_text_latitude);
+        EditText latitudeEditText = findViewById(R.id.edit_text_city);
         EditText altitudeEditText = findViewById(R.id.edit_text_altitude);
         closeKeyboard();
+
         try {
             altitude = Double.parseDouble(altitudeEditText.getText().toString());
             latitude = Double.parseDouble(latitudeEditText.getText().toString());
@@ -54,37 +64,28 @@ public class MainActivity extends AppCompatActivity {
             altitudeEditText.setText("");
             Context context = getApplicationContext();
             CharSequence text = "Incorrect co-ordinates!";
-            int duration = Toast.LENGTH_LONG;
 
-            Toast toast = Toast.makeText(context, text, duration);
+
+            Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
             toast.show();
         }
     }
-
     public void useDefaultCoordinates(View view) {
+        try {
+            advancedWeather = new AdvancedWeather("Łódź", view, this);
+        } catch ( java.net.ConnectException e) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Failed to connect to server, data might be outdated.", Toast.LENGTH_LONG);
+            toast.show();
+            e.printStackTrace();
+        }
         //Łódź
-        latitude = 19.45303;
-        altitude = 51.77665;
-
-        //Gdańsk
-        //latitude = 18.596496032411604;
-//        altitude = 54.37282100574918;
-
-        astronomyCalculator = new AstronomyCalculator(altitude, latitude);
+//        latitude = 19.45303;
+//        altitude = 51.77665;
+        astronomyCalculator = new AstronomyCalculator(advancedWeather.getLon(), advancedWeather.getLat());
     }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getAltitude() {
-        return altitude;
-    }
-
     public static void setRefreshRate(double refreshRate) {
         MainActivity.refreshRate = refreshRate * 60.0;
     }
-
     private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
@@ -92,5 +93,10 @@ public class MainActivity extends AppCompatActivity {
             manager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
-
+    public double getLatitude() {
+        return latitude;
+    }
+    public double getAltitude() {
+        return altitude;
+    }
 }

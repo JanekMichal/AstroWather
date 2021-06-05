@@ -1,4 +1,4 @@
-package com.example.navbar.ui.dashboard;
+package com.example.navbar.ui.sun;
 
 import android.os.Bundle;
 import android.os.Handler;

@@ -1,4 +1,4 @@
-package com.example.navbar.ui.dashboard;
+package com.example.navbar.ui.sun;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

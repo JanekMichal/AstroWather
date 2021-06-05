@@ -16,4 +16,14 @@
         android:icon="@drawable/icons8_full_moon_64"
         android:title="@string/title_moon" />
 
+    <item
+        android:id="@+id/weatherFragment"
+        android:icon="@drawable/weather_icon"
+        android:title="@string/weather" />
+
+    <item
+        android:id="@+id/forecastFragment"
+        android:icon="@drawable/icons8_clock_64"
+        android:title="@string/forecast" />
+
 </menu>

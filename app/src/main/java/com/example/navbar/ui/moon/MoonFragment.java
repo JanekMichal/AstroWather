@@ -1,4 +1,4 @@
-package com.example.navbar.ui.notifications;
+package com.example.navbar.ui.moon;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
-import com.example.navbar.ui.dashboard.SunFragment;
-import com.example.navbar.ui.dashboard.SunViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -7,19 +7,27 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.navbar.ui.home.SettingsFragment"
+        android:name="com.example.navbar.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.navbar.ui.dashboard.SunFragment"
+        android:name="com.example.navbar.ui.sun.SunFragment"
         android:label="@string/title_sun"
         tools:layout="@layout/fragment_sun" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.navbar.ui.notifications.MoonFragment"
+        android:name="com.example.navbar.ui.moon.MoonFragment"
         android:label="@string/title_moon"
         tools:layout="@layout/fragment_moon" />
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="com.example.navbar.ui.weather.WeatherFragment"
+        android:label="WeatherFragment" />
+    <fragment
+        android:id="@+id/forecastFragment"
+        android:name="com.example.navbar.ui.forecast.ForecastFragment"
+        android:label="ForecastFragment" />
 </navigation>

@@ -21,6 +21,18 @@
     <string name="enter_your_co_ordinates">Enter your co-ordinates:</string>
     <string name="use_default">Use Default</string>
     <string name="moon_and_sun">Moon and Sun</string>
+    <string name="city">City:</string>
+    <string name="enter_new_location">Enter new location:</string>
+    <string name="add_city">Add city</string>
+    <string name="weather">Weather</string>
+    <string name="forecast">Forecast</string>
+    <string name="pressure">Pressure</string>
+    <string name="high">High</string>
+    <string name="low">Low</string>
+    <string name="temperature">Temperature</string>
+    <string name="condition">Condition</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="humidity">Humidity</string>
 
     <string-array name="time_array">
         <item>Select refresh time</item>
