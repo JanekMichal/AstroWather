@@ -24,11 +24,19 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/text_city_moon"
+                style="@style/light_text"
+                android:textSize="24sp"
+
+                />
+
+            <TextView
                 android:id="@+id/text_device_time_moon"
                 style="@style/light_text"
                 android:textSize="24sp"
 
                 />
+
 
         </LinearLayout>
 
@@ -159,7 +167,6 @@
                 android:id="@+id/text_moon_phase_value"
                 style="@style/light_text" />
         </LinearLayout>
-
 
 
     </LinearLayout>

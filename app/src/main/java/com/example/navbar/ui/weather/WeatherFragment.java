@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
+import com.example.navbar.ui.settings.SettingsViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,12 +33,15 @@ public class WeatherFragment extends Fragment {
     TextView windSpeedTextView;
     TextView humidityTextView;
     String currentTime;
-
+    TextView cityTextView;
+    private SettingsViewModel settingsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        WeatherViewModel weatherViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
+        WeatherViewModel weatherViewModel = new ViewModelProvider(requireActivity()).get(WeatherViewModel.class);
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_weather, container, false);
 
+        cityTextView = root.findViewById(R.id.text_city_weather);
         deviceTimeWeatherTextView = root.findViewById(R.id.text_device_time_weather);
         conditionTextView = root.findViewById(R.id.text_condition_value);
         temperatureTextView = root.findViewById(R.id.text_temperature_value);
@@ -45,84 +51,49 @@ public class WeatherFragment extends Fragment {
         windSpeedTextView = root.findViewById(R.id.text_wind_speed_value);
         humidityTextView = root.findViewById(R.id.text_humidity_value);
 
-        weatherViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-            if (MainActivity.astronomyCalculator == null) {
-                deviceTimeWeatherTextView.setText(R.string.settings_not_set);
-            } else {
-                runTimers();
-                updateTime();
 
-                    setWeatherDetails();
+        updateWeatherInfo(weatherViewModel);
 
-
-//                try {
-//                    MainActivity.advancedWeather.creteMainFile(getActivity());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                updateWeatherInfo(weatherViewModel);
             }
         });
+
         return root;
     }
 
-    public void setWeatherDetails() {
+    private void updateWeatherInfo(WeatherViewModel weatherViewModel) {
+        if (MainActivity.astronomyCalculator == null) {
+            deviceTimeWeatherTextView.setText(R.string.settings_not_set);
+        } else if (MainActivity.unit.equals("C")) {
+            cityTextView.setText(weatherViewModel.getCity().getValue());
+            conditionTextView.setText(weatherViewModel.getDescription().getValue());
+            temperatureTextView.setText(weatherViewModel.getTemp().getValue() + "°C");
+            lowTempTextView.setText(weatherViewModel.getTempMin().getValue() + "°C");
+            highTempTextView.setText(weatherViewModel.getTempMax().getValue() + "°C");
+            pressureTextView.setText(weatherViewModel.getPressure().getValue() + "hPa");
+            windSpeedTextView.setText(weatherViewModel.getWind().getValue() + "m/s");
+            humidityTextView.setText(weatherViewModel.getHumidity().getValue() + "%");
 
-        String description = MainActivity.advancedWeather.getDescription();
-        int temp =  MainActivity.advancedWeather.getTemp();
-        int tempMin =  MainActivity.advancedWeather.getTempMin();
-        int tempMax =  MainActivity.advancedWeather.getTempMax();
-        int pressure =  MainActivity.advancedWeather.getPressure();
-        int wind =  MainActivity.advancedWeather.getWind();
-        int humidity =  MainActivity.advancedWeather.getHumidity();
+            runTimers();
+            updateTime();
+        } else {
+            cityTextView.setText(weatherViewModel.getCity().getValue());
+            conditionTextView.setText(weatherViewModel.getDescription().getValue());
+            temperatureTextView.setText(weatherViewModel.getTemp().getValue() * 1.8 + 32 + "°F");
+            lowTempTextView.setText(weatherViewModel.getTempMin().getValue() * 1.8 + 32 + "°F");
+            highTempTextView.setText(weatherViewModel.getTempMax().getValue() * 1.8 + 32 + "°F");
+            pressureTextView.setText(weatherViewModel.getPressure().getValue() * 2088.5 + "psf");
+            windSpeedTextView.setText(weatherViewModel.getWind().getValue() * 3.2808 + "ft/s");
+            humidityTextView.setText(weatherViewModel.getHumidity().getValue() + "%");
 
-        conditionTextView.setText(description);
-        temperatureTextView.setText(temp + "°C");
-        lowTempTextView.setText(tempMin + "°C");
-        highTempTextView.setText(tempMax + "°C");
-        pressureTextView.setText(pressure + "hPa");
-        windSpeedTextView.setText(wind + "m/s");
-        humidityTextView.setText(humidity + "%");
+            runTimers();
+            updateTime();
+        }
     }
 
-
-//    public void getWeatherDetails() {
-//        String query = API_PATH + "?q=" + city + "&units=metric&APPID=" + API_KEY;
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST, query,
-//                response -> {
-//                    try {
-//
-//                        JSONObject jsonResponse = new JSONObject(response);
-//                        JSONArray jsonArray = jsonResponse.getJSONArray("weather");
-//                        JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
-//                        JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
-//                        JSONObject jsonObjectWind = jsonResponse.getJSONObject("wind");
-//
-//                        String description = jsonObjectWeather.getString("description");
-//                        int temp = jsonObjectMain.getInt("temp");
-//                        int tempMin = jsonObjectMain.getInt("temp_min");
-//                        int tempMax = jsonObjectMain.getInt("temp_max");
-//                        int pressure = jsonObjectMain.getInt("pressure");
-//                        int wind = jsonObjectWind.getInt("speed");
-//                        int humidity = jsonObjectMain.getInt("humidity");
-//
-//                        conditionTextView.setText(description);
-//                        temperatureTextView.setText(temp + "°C");
-//                        lowTempTextView.setText(tempMin + "°C");
-//                        highTempTextView.setText(tempMax + "°C");
-//                        pressureTextView.setText( pressure + "hPa");
-//                        windSpeedTextView.setText(wind + "m/s");
-//                        humidityTextView.setText(humidity + "%");
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }, error -> {
-//
-//            System.out.println("Error");
-//        });
-//        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-//        requestQueue.add(stringRequest);
-//    }
 
     public void runTimers() {
         Handler timeHandler = new Handler();

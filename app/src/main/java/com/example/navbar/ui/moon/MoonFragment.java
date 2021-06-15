@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
+import com.example.navbar.ui.settings.SettingsViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.Locale;
 public class MoonFragment extends Fragment {
 
     private MoonViewModel moonViewModel;
-
+    private SettingsViewModel settingsViewModel;
     TextView deviceTimeMoonTextView;
     TextView altitudeMoonTextView;
     TextView latitudeMoonTextView;
@@ -32,7 +33,6 @@ public class MoonFragment extends Fragment {
     TextView newMoonTextView;
     TextView fullMoonTextView;
     TextView moonPhaseTextView;
-    TextView dayOfSonodicMonthTextView;
 
     TextView sunRiseTextView;
     TextView sunSetTextView;
@@ -42,11 +42,14 @@ public class MoonFragment extends Fragment {
     TextView sunCivilDawn;
 
     String currentTime;
+    TextView city;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        moonViewModel = new ViewModelProvider(this).get(MoonViewModel.class);
+        moonViewModel = new ViewModelProvider(requireActivity()).get(MoonViewModel.class);
+        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_moon, container, false);
 
         deviceTimeMoonTextView = root.findViewById(R.id.text_device_time_moon);
@@ -66,28 +69,28 @@ public class MoonFragment extends Fragment {
         sunCivilTwilight = root.findViewById(R.id.text_sun_civil_twilight_value);
         sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn_value);
 
+        city = root.findViewById(R.id.text_city_moon);
 
-        moonViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                if (MainActivity.astronomyCalculator == null) {
-                    deviceTimeMoonTextView.setText(R.string.settings_not_set);
-                } else {
-                    runTimers();
-                    updateTime();
-                    updateMoonInfo();
-                }
-            }
-        });
+        if (MainActivity.astronomyCalculator == null) {
+            deviceTimeMoonTextView.setText(R.string.settings_not_set);
+        } else {
+
+            runTimers();
+            updateTimeAndCity();
+            updateMoonInfo();
+        }
+
+
         return root;
     }
+
 
     public void runTimers() {
         Handler timeHandler = new Handler();
         Runnable updateTime = new Runnable() {
             @Override
             public void run() {
-                updateTime();
+                updateTimeAndCity();
                 timeHandler.postDelayed(this, 1000);
             }
         };
@@ -104,7 +107,8 @@ public class MoonFragment extends Fragment {
         handler.postDelayed(updateTask, MainActivity.refreshRate.longValue() * 1000);
     }
 
-    public void updateTime() {
+    public void updateTimeAndCity() {
+        city.setText(moonViewModel.getCity().getValue());
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         deviceTimeMoonTextView.setText(currentTime);
     }
@@ -112,8 +116,10 @@ public class MoonFragment extends Fragment {
     public void updateMoonInfo() {
 
         altitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
+        altitudeMoonTextView.setText("" + MainActivity.unit);
         latitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
 
+        city.setText(moonViewModel.getCity().getValue());
         moonRiseTextView.setText(MainActivity.astronomyCalculator.getMoonRiseInfo());
         moonSetTextView.setText(MainActivity.astronomyCalculator.getMoonSetInfo());
         moonRiseTextView.setText(MainActivity.astronomyCalculator.getMoonRiseInfo());

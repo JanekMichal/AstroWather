@@ -1,6 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.weather.WeatherFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bright_blue"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="#023e8a"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/text_city_forecast"
+                style="@style/light_text"
+                android:textSize="24sp"
+
+                />
+
+            <TextView
+                android:id="@+id/text_device_time_forecast"
+                style="@style/light_text"
+                android:textSize="24sp"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+
+            >
+
+            <TextView
+                android:id="@+id/forecast_day_1"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_1_value"
+                style="@style/light_text"
+                android:gravity="center_horizontal" />
+
+            <ImageView
+                android:id="@+id/forecast_day_1_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/light_blue"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_2"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_2_value"
+                style="@style/light_text" />
+
+            <ImageView
+
+                android:id="@+id/forecast_day_2_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_3"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_3_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_3_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/light_blue"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_4"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_4_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_4_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_5"
+
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_5_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_5_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/light_blue"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_6"
+
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_6_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_6_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_7"
+
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_7_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_7_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

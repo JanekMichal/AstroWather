@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
@@ -44,10 +42,11 @@ public class SunFragment extends Fragment {
     TextView moonPhaseTextView;
 
     String currentTime;
+    TextView city;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        sunViewModel = new ViewModelProvider(this).get(SunViewModel.class);
+        sunViewModel = new ViewModelProvider(requireActivity()).get(SunViewModel.class);
         View root = inflater.inflate(R.layout.fragment_sun, container, false);
 
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
@@ -72,18 +71,15 @@ public class SunFragment extends Fragment {
         sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn_value);
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
-        sunViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                if (MainActivity.astronomyCalculator == null) {
-                    deviceTimeSunTextView.setText(R.string.settings_not_set);
-                } else {
-                    runTimers();
-                    updateTime();
-                    updateSunInfo();
-                }
-            }
-        });
+        city = root.findViewById(R.id.text_city_sun);
+        if (MainActivity.astronomyCalculator == null) {
+            deviceTimeSunTextView.setText(R.string.settings_not_set);
+        } else {
+            runTimers();
+            updateTimeAndCity();
+            updateSunInfo();
+        }
+
         return root;
     }
 
@@ -92,7 +88,7 @@ public class SunFragment extends Fragment {
         Runnable updateTime = new Runnable() {
             @Override
             public void run() {
-                updateTime();
+                updateTimeAndCity();
                 timeHandler.postDelayed(this, 1000);
             }
         };
@@ -109,7 +105,8 @@ public class SunFragment extends Fragment {
         handler.postDelayed(updateTask, MainActivity.refreshRate.longValue() * 1000);
     }
 
-    public void updateTime() {
+    public void updateTimeAndCity() {
+        city.setText(sunViewModel.getCity().getValue());
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
         deviceTimeSunTextView.setText(currentTime);
     }
@@ -123,7 +120,6 @@ public class SunFragment extends Fragment {
         }
 
 
-
         sunRiseTextView.setText(MainActivity.astronomyCalculator.getSunRiseInfo());
         sunSetTextView.setText(MainActivity.astronomyCalculator.getSunSetInfo());
         sunRiseAzimuthTextView.setText("" + MainActivity.astronomyCalculator.getSunRiseAzimuthInfo());
@@ -131,7 +127,7 @@ public class SunFragment extends Fragment {
         sunCivilTwilight.setText(MainActivity.astronomyCalculator.getCivilTwilightMorning());
         sunCivilDawn.setText(MainActivity.astronomyCalculator.getCivilTwilightEvening());
 
-        if(moonRiseTextView != null) {
+        if (moonRiseTextView != null) {
 
             altitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
             latitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());

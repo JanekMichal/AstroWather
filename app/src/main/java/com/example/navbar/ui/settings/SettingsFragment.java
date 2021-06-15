@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +16,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
+import com.example.navbar.ui.weather.WeatherViewModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,17 +49,19 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
     String currentTime;
 
+    WeatherViewModel weatherViewModel;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SettingsViewModel settingsViewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        Spinner spinner = root.findViewById(R.id.time_spinner);
+        Spinner spinnerTime = root.findViewById(R.id.time_spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.time_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        spinnerTime.setAdapter(adapter);
+        spinnerTime.setOnItemSelectedListener(this);
 
 
         deviceTimeMoonTextView = root.findViewById(R.id.text_device_time_moon);
@@ -79,13 +85,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         updateTime();
         updateMoonInfo();
 
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-
-
-            }
-        });
 
         return root;
     }
@@ -132,8 +131,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
             newMoonTextView.setText(MainActivity.astronomyCalculator.getNextNewMoon());
             fullMoonTextView.setText(MainActivity.astronomyCalculator.getNextFullMoon());
             moonPhaseTextView.setText((int) MainActivity.astronomyCalculator.getMoonPhase() + "%");
-            //dayOfSonodicMonthTextView.setText("Day of Sonodic month " + MainActivity.astronomyCalculator.;
-
 
             sunRiseTextView.setText(MainActivity.astronomyCalculator.getSunRiseInfo());
             sunSetTextView.setText(MainActivity.astronomyCalculator.getSunSetInfo());
