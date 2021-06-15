@@ -169,6 +169,5 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 
             deviceTimeMoonTextView.setText(currentTime);
         }
-
     }
 }

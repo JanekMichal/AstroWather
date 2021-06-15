@@ -33,6 +33,13 @@
                 />
 
             <TextView
+                android:id="@+id/text_city_sun"
+                style="@style/light_text"
+                android:textSize="24sp"
+
+                />
+
+            <TextView
                 android:id="@+id/text_altitude_moon"
                 style="@style/light_text"
                 android:text="@string/altitude"

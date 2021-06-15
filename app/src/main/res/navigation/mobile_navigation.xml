@@ -25,9 +25,11 @@
     <fragment
         android:id="@+id/weatherFragment"
         android:name="com.example.navbar.ui.weather.WeatherFragment"
-        android:label="WeatherFragment" />
+        android:label="WeatherFragment"
+        tools:layout="@layout/fragment_weather" />
     <fragment
         android:id="@+id/forecastFragment"
         android:name="com.example.navbar.ui.forecast.ForecastFragment"
-        android:label="ForecastFragment" />
+        android:label="ForecastFragment"
+        tools:layout="@layout/fragment_forecast" />
 </navigation>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.moon.MoonFragment">
+    tools:context=".ui.weather.WeatherFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,181 +24,19 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/text_device_time_moon"
+                android:id="@+id/text_city_forecast"
                 style="@style/light_text"
                 android:textSize="24sp"
 
                 />
 
             <TextView
-                android:id="@+id/text_city_moon"
+                android:id="@+id/text_device_time_forecast"
                 style="@style/light_text"
                 android:textSize="24sp"
 
                 />
 
-            <TextView
-                android:id="@+id/text_altitude_moon"
-                style="@style/light_text"
-                android:text="@string/altitude"
-
-                />
-
-            <TextView
-                android:id="@+id/text_altitude_moon_value"
-                style="@style/light_text"
-                android:gravity="center_horizontal" />
-
-            <TextView
-                android:id="@+id/text_latitude_moon"
-                style="@style/light_text"
-                android:text="@string/latitude" />
-
-            <TextView
-                android:id="@+id/text_latitude_moon_value"
-                style="@style/light_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/text_moon_rise"
-                style="@style/light_text"
-                android:text="@string/moon_rise" />
-
-            <TextView
-                android:id="@+id/text_moon_rise_value"
-                style="@style/light_text"
-
-                />
-
-            <TextView
-                android:id="@+id/text_sun_rise"
-                style="@style/light_text"
-                android:text="@string/sun_rise" />
-
-            <TextView
-                android:id="@+id/text_sun_rise_value"
-                style="@style/light_text"
-
-                />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/light_blue"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/text_moon_set"
-                style="@style/light_text"
-                android:text="@string/moon_set" />
-
-            <TextView
-                android:id="@+id/text_moon_set_value"
-                style="@style/light_text" />
-
-            <TextView
-                android:id="@+id/text_sun_set"
-                style="@style/light_text"
-                android:text="@string/sun_set" />
-
-            <TextView
-                android:id="@+id/text_sun_set_value"
-                style="@style/light_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/text_new_moon"
-
-                style="@style/light_text"
-                android:text="@string/next_new_moon" />
-
-            <TextView
-                android:id="@+id/text_new_moon_value"
-                style="@style/light_text" />
-
-            <TextView
-                android:id="@+id/text_sun_rise_azimuth"
-
-                style="@style/light_text"
-                android:text="@string/sun_rise_azimuth" />
-
-            <TextView
-                android:id="@+id/text_sun_rise_azimuth_value"
-                style="@style/light_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@color/light_blue"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/text_full_moon"
-
-                style="@style/light_text"
-                android:text="@string/next_full_moon" />
-
-            <TextView
-                android:id="@+id/text_full_moon_value"
-                style="@style/light_text" />
-
-            <TextView
-                android:id="@+id/text_sun_set_azimuth"
-
-                style="@style/light_text"
-                android:text="Sun set azimuth: " />
-
-            <TextView
-                android:id="@+id/text_sun_set_azimuth_value"
-                style="@style/light_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/text_moon_phase"
-
-                style="@style/light_text"
-                android:text="@string/moon_phase" />
-
-            <TextView
-                android:id="@+id/text_moon_phase_value"
-                style="@style/light_text" />
-
-            <TextView
-                android:id="@+id/text_sun_civil_dawn"
-
-                style="@style/light_text"
-                android:text="@string/sun_civil_dawn" />
-
-            <TextView
-                android:id="@+id/text_sun_civil_dawn_value"
-                style="@style/light_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -206,26 +44,170 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="@color/light_blue"
+
             >
 
-            <TextView style="@style/light_text" />
-
             <TextView
-
-                style="@style/light_text" />
-
-            <TextView
-                android:id="@+id/text_sun_civil_twilight"
+                android:id="@+id/forecast_day_1"
                 style="@style/light_text"
-                android:text="@string/sun_civil_twilight" />
+                android:text="" />
 
             <TextView
-                android:id="@+id/text_sun_civil_twilight_value"
+                android:id="@+id/forecast_day_1_value"
+                style="@style/light_text"
+                android:gravity="center_horizontal" />
+
+            <ImageView
+                android:id="@+id/forecast_day_1_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/light_blue"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_2"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_2_value"
                 style="@style/light_text" />
+
+            <ImageView
+
+                android:id="@+id/forecast_day_2_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_3"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_3_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_3_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
         </LinearLayout>
 
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/light_blue"
+            android:gravity="center">
 
+            <TextView
+                android:id="@+id/forecast_day_4"
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_4_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_4_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_5"
+
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_5_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_5_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/light_blue"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_6"
+
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_6_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_6_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/forecast_day_7"
+
+                style="@style/light_text"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/forecast_day_7_value"
+                style="@style/light_text" />
+
+            <ImageView
+                android:id="@+id/forecast_day_7_icon"
+                style="@style/light_text"
+                android:gravity="center_horizontal"
+                 />
+
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

@@ -8,13 +8,16 @@
     tools:context=".ui.settings.SettingsFragment">
 
 
+
+
     <TextView
         android:id="@+id/text_settings"
         style="@style/light_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/enter_your_co_ordinates"
-        android:textSize="25dp" />
+        android:layout_marginTop="40dp"
+        android:text="@string/enter_new_location"
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/edit_text_city"
@@ -22,21 +25,8 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_settings"
-        android:layout_marginStart="70dp"
         android:layout_marginTop="30dp"
-        android:hint="@string/latitude"
-
-        android:textColorHint="@color/almost_white" />
-
-    <EditText
-        android:id="@+id/edit_text_altitude"
-        style="@style/light_text"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edit_text_city"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/altitude"
+        android:hint="@string/city"
         android:textColorHint="@color/almost_white" />
 
     <Spinner
@@ -47,6 +37,32 @@
         android:layout_toEndOf="@+id/edit_text_city"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="40dp" />
+
+    <RadioGroup
+        android:id="@+id/layout_radio_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/time_spinner"
+        android:layout_toEndOf="@+id/edit_text_city"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="30dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Imperial"
+            style="@style/light_text"
+            />
+        <ToggleButton
+            android:id="@+id/unitsSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:onClick="setOnCheckedChangeListener"
+            />
+
+    </RadioGroup>
 
     <Button
         android:id="@+id/button_add_city"

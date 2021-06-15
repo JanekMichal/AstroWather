@@ -34,6 +34,7 @@
     <string name="wind_speed">Wind speed</string>
     <string name="humidity">Humidity</string>
 
+
     <string-array name="time_array">
         <item>Select refresh time</item>
         <item>15 min</item>

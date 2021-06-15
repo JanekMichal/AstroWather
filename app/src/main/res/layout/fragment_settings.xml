@@ -61,7 +61,7 @@
         android:layout_marginTop="20dp" />
 
     <Button
-        android:id="@+id/button_add_city"
+        android:id="@+id/button_confirm"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/time_spinner"
@@ -69,12 +69,12 @@
         android:layout_marginTop="50dp"
         android:backgroundTint="@color/dark_blue"
         android:onClick="buttonConfirmSettingsClick"
-        android:text="@string/add_city" />
+        android:text="@string/confirm" />
     <Button
         android:id="@+id/button_remove_city"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button_add_city"
+        android:layout_below="@+id/button_confirm"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/dark_blue"

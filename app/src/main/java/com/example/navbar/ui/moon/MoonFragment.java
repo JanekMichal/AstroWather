@@ -8,9 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
@@ -24,7 +22,6 @@ import java.util.Locale;
 public class MoonFragment extends Fragment {
 
     private MoonViewModel moonViewModel;
-    private SettingsViewModel settingsViewModel;
     TextView deviceTimeMoonTextView;
     TextView altitudeMoonTextView;
     TextView latitudeMoonTextView;
@@ -48,7 +45,6 @@ public class MoonFragment extends Fragment {
 
 
         moonViewModel = new ViewModelProvider(requireActivity()).get(MoonViewModel.class);
-        settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
 
         View root = inflater.inflate(R.layout.fragment_moon, container, false);
 
@@ -116,7 +112,6 @@ public class MoonFragment extends Fragment {
     public void updateMoonInfo() {
 
         altitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getAltitude());
-        altitudeMoonTextView.setText("" + MainActivity.unit);
         latitudeMoonTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
 
         city.setText(moonViewModel.getCity().getValue());
@@ -137,7 +132,5 @@ public class MoonFragment extends Fragment {
             sunCivilTwilight.setText(MainActivity.astronomyCalculator.getCivilTwilightMorning());
             sunCivilDawn.setText(MainActivity.astronomyCalculator.getCivilTwilightEvening());
         }
-
-
     }
 }

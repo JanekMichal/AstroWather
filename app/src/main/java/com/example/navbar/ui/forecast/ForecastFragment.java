@@ -1,9 +1,5 @@
 package com.example.navbar.ui.forecast;
 
-import android.content.Context;
-import android.graphics.drawable.AdaptiveIconDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -19,8 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navbar.MainActivity;
 import com.example.navbar.R;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -127,12 +121,12 @@ public class ForecastFragment extends Fragment {
 
 
                 dayOneTextView.setText(forecastViewModel.getDayOneName().getValue());
-                dayTwoTextView.setText(forecastViewModel.getDayOneName().getValue());
-                dayThreeTextView.setText(forecastViewModel.getDayOneName().getValue());
-                dayFourTextView.setText(forecastViewModel.getDayOneName().getValue());
-                dayFiveTextView.setText(forecastViewModel.getDayOneName().getValue());
-                daySixTextView.setText(forecastViewModel.getDayOneName().getValue());
-                daySevenTextView.setText(forecastViewModel.getDayOneName().getValue());
+                dayTwoTextView.setText(forecastViewModel.getDayTwoName().getValue());
+                dayThreeTextView.setText(forecastViewModel.getDayThreeName().getValue());
+                dayFourTextView.setText(forecastViewModel.getDayFourName().getValue());
+                dayFiveTextView.setText(forecastViewModel.getDayFiveName().getValue());
+                daySixTextView.setText(forecastViewModel.getDaySixName().getValue());
+                daySevenTextView.setText(forecastViewModel.getDaySevenName().getValue());
 
                 cityTextView.setText(forecastViewModel.getCity().getValue());
 
@@ -192,7 +186,6 @@ public class ForecastFragment extends Fragment {
         Runnable updateTask = new Runnable() {
             @Override
             public void run() {
-
                 handler.postDelayed(this, MainActivity.refreshRate.longValue() * 1000);
             }
         };
