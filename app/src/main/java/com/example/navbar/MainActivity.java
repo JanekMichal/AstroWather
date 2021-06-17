@@ -39,6 +39,10 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static com.example.navbar.ui.settings.SettingsFragment.favCityList;
 
 public class MainActivity extends AppCompatActivity {
     public static AstronomyCalculator astronomyCalculator;
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private final String FORECAST_API_PATH = "https://api.openweathermap.org/data/2.5/onecall";
     private String exclude = "current,minutely,hourly,alerts";
     private String units = "metric";
-    private String city = "Głowno";
+    public static String city = "Głowno";
     public Double lon;
     private Double lat;
     private String description;
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private Integer pressure;
     private Integer wind;
     private Integer humidity;
+    private boolean isCityNameValid;
     SingletonQueue requestQueue;
     JSONObject jsonResponse;
     JSONObject jsonResponseForecast;
@@ -81,25 +86,74 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
+        String favCityListStr = readFromFile("favCities");
+        favCityListStr = favCityListStr.replace("]", "");
+        favCityListStr = favCityListStr.replace("[", "");
+        favCityListStr = favCityListStr.replace("\n", "");
+        System.out.println("1--------------------- " + favCityListStr);
+        //String[] temp = new ArrayList<>(Arrays.asList(favCityListStr.split(", ")));
+        String[] temp = favCityListStr.split(", ");
+        favCityList.addAll(Arrays.asList(temp).subList(1, temp.length));
+
 
         toggle = (ToggleButton) findViewById(R.id.unitsSwitch);
-
         initializeViewModels();
         requestQueue = SingletonQueue.getInstance(getApplicationContext());
-
         if (!isConnectedToInternet()) {
             loadWeatherFromFile();
         }
-
     }
 
     public void buttonConfirmSettingsClick(View view) {
-        closeKeyboard();
         EditText cityEditText = findViewById(R.id.edit_text_city);
         city = cityEditText.getText().toString();
         getWeatherDetails();
+        closeKeyboard();
     }
 
+//    public void buttonSelectCityClick(View view) {
+//        EditText cityEditText = findViewById(R.id.edit_text_city);
+//        city = cityEditText.getText().toString();
+//    }
+
+    public void buttonAddCityClick(View view) {
+        EditText cityEditText = findViewById(R.id.edit_text_city);
+        city = cityEditText.getText().toString();
+        String query = WEATHER_API_PATH + "?q=" + city + "&units=metric&APPID=" + API_KEY;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, query,
+                response -> {
+                    isCityNameValid = true;
+                    favCityList.add(city);
+                    cityEditText.setText("");
+                    closeKeyboard();
+                    writeToFile(favCityList.toString(), "favCities");
+                }, error -> {
+            isCityNameValid = false;
+        });
+        requestQueue.addToRequestQueue(stringRequest);
+    }
+
+
+
+    public void buttonRemoveCityClick(View view) {
+        favCityList.removeIf(n -> (!n.equals("Select favourite city")));
+        writeToFile(favCityList.toString(), "favCities");
+    }
+
+    public void buttonExecuteClick(View view) {
+        EditText cityEditText = findViewById(R.id.edit_text_city);
+        if (cityEditText.getText().toString().equals("")) {
+            getWeatherDetails();
+        } else {
+            city = cityEditText.getText().toString();
+            getWeatherDetails();
+        }
+    }
+
+    public void refreshClick(View view) {
+        getWeatherDetails();
+    }
 
     private void loadWeatherFromFile() {
         String previousWeather = readFromFile("weather");
@@ -362,4 +416,6 @@ public class MainActivity extends AppCompatActivity {
     public double getLat() {
         return lat;
     }
+
+
 }
