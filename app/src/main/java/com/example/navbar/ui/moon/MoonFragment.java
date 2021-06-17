@@ -48,24 +48,7 @@ public class MoonFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_moon, container, false);
 
-        deviceTimeMoonTextView = root.findViewById(R.id.text_device_time_moon);
-        altitudeMoonTextView = root.findViewById(R.id.text_altitude_moon_value);
-        latitudeMoonTextView = root.findViewById(R.id.text_latitude_moon_value);
-
-        moonRiseTextView = root.findViewById(R.id.text_moon_rise_value);
-        moonSetTextView = root.findViewById(R.id.text_moon_set_value);
-        newMoonTextView = root.findViewById(R.id.text_new_moon_value);
-        fullMoonTextView = root.findViewById(R.id.text_full_moon_value);
-        moonPhaseTextView = root.findViewById(R.id.text_moon_phase_value);
-
-        sunRiseTextView = root.findViewById(R.id.text_sun_rise_value);
-        sunSetTextView = root.findViewById(R.id.text_sun_set_value);
-        sunRiseAzimuthTextView = root.findViewById(R.id.text_sun_rise_azimuth_value);
-        sunSetAzimuthTextView = root.findViewById(R.id.text_sun_set_azimuth_value);
-        sunCivilTwilight = root.findViewById(R.id.text_sun_civil_twilight_value);
-        sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn_value);
-
-        city = root.findViewById(R.id.text_city_moon);
+        initializeViews(root);
 
         if (MainActivity.astronomyCalculator == null) {
             deviceTimeMoonTextView.setText(R.string.settings_not_set);
@@ -79,6 +62,8 @@ public class MoonFragment extends Fragment {
 
         return root;
     }
+
+
 
 
     public void runTimers() {
@@ -132,5 +117,25 @@ public class MoonFragment extends Fragment {
             sunCivilTwilight.setText(MainActivity.astronomyCalculator.getCivilTwilightMorning());
             sunCivilDawn.setText(MainActivity.astronomyCalculator.getCivilTwilightEvening());
         }
+    }
+    private void initializeViews(View root) {
+        deviceTimeMoonTextView = root.findViewById(R.id.text_device_time_moon);
+        altitudeMoonTextView = root.findViewById(R.id.text_altitude_moon_value);
+        latitudeMoonTextView = root.findViewById(R.id.text_latitude_moon_value);
+
+        moonRiseTextView = root.findViewById(R.id.text_moon_rise_value);
+        moonSetTextView = root.findViewById(R.id.text_moon_set_value);
+        newMoonTextView = root.findViewById(R.id.text_new_moon_value);
+        fullMoonTextView = root.findViewById(R.id.text_full_moon_value);
+        moonPhaseTextView = root.findViewById(R.id.text_moon_phase_value);
+
+        sunRiseTextView = root.findViewById(R.id.text_sun_rise_value);
+        sunSetTextView = root.findViewById(R.id.text_sun_set_value);
+        sunRiseAzimuthTextView = root.findViewById(R.id.text_sun_rise_azimuth_value);
+        sunSetAzimuthTextView = root.findViewById(R.id.text_sun_set_azimuth_value);
+        sunCivilTwilight = root.findViewById(R.id.text_sun_civil_twilight_value);
+        sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn_value);
+
+        city = root.findViewById(R.id.text_city_moon);
     }
 }

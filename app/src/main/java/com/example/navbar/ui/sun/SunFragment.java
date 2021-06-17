@@ -51,6 +51,21 @@ public class SunFragment extends Fragment {
 
         currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
 
+        initializeViews(root);
+
+        currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+        if (MainActivity.astronomyCalculator == null) {
+            deviceTimeSunTextView.setText(R.string.settings_not_set);
+        } else {
+            runTimers();
+            updateTimeAndCity();
+            updateSunInfo();
+        }
+
+        return root;
+    }
+
+    private void initializeViews(View root) {
         deviceTimeSunTextView = root.findViewById(R.id.text_device_time_sun_value);
         altitudeSunTextView = root.findViewById(R.id.text_altitude_sun_value);
         latitudeSunTextView = root.findViewById(R.id.text_latitude_sun_value);
@@ -69,18 +84,9 @@ public class SunFragment extends Fragment {
         sunSetAzimuthTextView = root.findViewById(R.id.text_sun_set_azimuth_value);
         sunCivilTwilight = root.findViewById(R.id.text_sun_civil_twilight_value);
         sunCivilDawn = root.findViewById(R.id.text_sun_civil_dawn_value);
-        currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
 
         city = root.findViewById(R.id.text_city_sun);
-        if (MainActivity.astronomyCalculator == null) {
-            deviceTimeSunTextView.setText(R.string.settings_not_set);
-        } else {
-            runTimers();
-            updateTimeAndCity();
-            updateSunInfo();
-        }
-
-        return root;
     }
 
     public void runTimers() {
@@ -119,7 +125,6 @@ public class SunFragment extends Fragment {
             latitudeSunTextView.setText("" + MainActivity.astronomyCalculator.getLatitude());
         }
 
-
         sunRiseTextView.setText(MainActivity.astronomyCalculator.getSunRiseInfo());
         sunSetTextView.setText(MainActivity.astronomyCalculator.getSunSetInfo());
         sunRiseAzimuthTextView.setText("" + MainActivity.astronomyCalculator.getSunRiseAzimuthInfo());
@@ -139,7 +144,5 @@ public class SunFragment extends Fragment {
             fullMoonTextView.setText(MainActivity.astronomyCalculator.getNextFullMoon());
             moonPhaseTextView.setText((int) MainActivity.astronomyCalculator.getMoonPhase() + "%");
         }
-
-
     }
 }

@@ -32,20 +32,16 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
 public class MainActivity extends AppCompatActivity {
     public static AstronomyCalculator astronomyCalculator;
-    public static double latitude = 0.0, altitude = 0.0;
     public static Double refreshRate = 60.0 * 60.0; //1 godzina
 
     public static String unit = "C";
@@ -55,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     private final String FORECAST_API_PATH = "https://api.openweathermap.org/data/2.5/onecall";
     private String exclude = "current,minutely,hourly,alerts";
     private String units = "metric";
-    private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
     private String city = "Głowno";
     public Double lon;
     private Double lat;
@@ -69,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     SingletonQueue requestQueue;
     JSONObject jsonResponse;
     JSONObject jsonResponseForecast;
-    String FILE_NAME = "weatherData.json";
 
     ForecastViewModel forecastViewModel;
     WeatherViewModel weatherViewModel;
@@ -90,19 +84,34 @@ public class MainActivity extends AppCompatActivity {
 
         toggle = (ToggleButton) findViewById(R.id.unitsSwitch);
 
-        weatherViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
-        forecastViewModel = new ViewModelProvider(this).get(ForecastViewModel.class);
-        sunViewModel = new ViewModelProvider(this).get(SunViewModel.class);
-        moonViewModel = new ViewModelProvider(this).get(MoonViewModel.class);
+        initializeViewModels();
         requestQueue = SingletonQueue.getInstance(getApplicationContext());
 
+        if (!isConnectedToInternet()) {
+            loadWeatherFromFile();
+        }
+
+    }
+
+    public void buttonConfirmSettingsClick(View view) {
+        closeKeyboard();
+        EditText cityEditText = findViewById(R.id.edit_text_city);
+        city = cityEditText.getText().toString();
+        getWeatherDetails();
+    }
+
+
+    private void loadWeatherFromFile() {
         String previousWeather = readFromFile("weather");
         String previousForecast = readFromFile("forecast");
         String previousCity = readFromFile("city");
+        String message = "No Internet connection, data might be outdated";
+        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+        toast.show();
         if (!previousWeather.equals("") && !previousForecast.equals("")) {
             try {
                 city = previousCity;
-                parseAPIResponse(previousWeather);
+                parseWeatherResponse(previousWeather);
                 parseForecastResponse(previousForecast);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -110,27 +119,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean isConnectedToInternet() {
+        ConnectivityManager cm = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo nInfo = cm.getActiveNetworkInfo();
+        return nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+    }
+
     public String readFromFile(String filename) {
         String ret = "";
 
         try {
             InputStream inputStream = getApplicationContext().openFileInput(filename + ".txt");
-
-            if ( inputStream != null ) {
+            if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                while ((receiveString = bufferedReader.readLine()) != null) {
                     stringBuilder.append("\n").append(receiveString);
                 }
 
                 inputStream.close();
                 ret = stringBuilder.toString();
             }
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             Log.e("login activity", "File not found: " + e.toString());
         } catch (IOException e) {
             Log.e("login activity", "Can not read file: " + e.toString());
@@ -145,8 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     getApplicationContext().openFileOutput(fileName + ".txt", Context.MODE_PRIVATE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Log.e("Exception", "File write failed: " + e.toString());
         }
     }
@@ -155,17 +167,13 @@ public class MainActivity extends AppCompatActivity {
         toggle = (ToggleButton) findViewById(R.id.unitsSwitch);
         if (toggle.isChecked()) {
             unit = "F";
-
         } else {
             unit = "C";
         }
     }
 
     public void useDefaultCoordinates(View view) {
-        ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo nInfo = cm.getActiveNetworkInfo();
-        boolean connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
-        if (connected) {
+        if (isConnectedToInternet()) {
             getWeatherDetails();
         } else {
             System.out.println("Brak połączenia");
@@ -178,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, query,
                 response -> {
                     try {
-                        parseAPIResponse(response);
+                        parseWeatherResponse(response);
                         writeToFile(jsonResponse.toString(), "weather");
                         writeToFile(city, "city");
                         createForecastRequest();
@@ -186,17 +194,17 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }, error -> {
-                String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
-                try {
-                    JSONObject data = new JSONObject(responseBody);
-                    String message = data.optString("message");
-                    Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
+            String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+            try {
+                JSONObject data = new JSONObject(responseBody);
+                String message = data.optString("message");
+                Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG);
 
-                    toast.show();
-                    error.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                toast.show();
+                error.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         });
         stringRequest.setShouldCache(true);
@@ -204,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.addToRequestQueue(stringRequest);
     }
 
-    private void parseAPIResponse(String response) throws JSONException {
+    private void parseWeatherResponse(String response) throws JSONException {
         jsonResponse = new JSONObject(response);
         JSONArray jsonArray = jsonResponse.getJSONArray("weather");
         JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
@@ -324,7 +332,6 @@ public class MainActivity extends AppCompatActivity {
         forecastViewModel.setDaySevenName(new MutableLiveData<>(day7));
     }
 
-
     public static void setRefreshRate(double refreshRate) {
         MainActivity.refreshRate = refreshRate * 60.0;
     }
@@ -337,20 +344,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonConfirmSettingsClick(View view) {
-
-        closeKeyboard();
-        EditText cityEditText = findViewById(R.id.edit_text_city);
-        city = cityEditText.getText().toString();
-        getWeatherDetails();
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getAltitude() {
-        return altitude;
+    private void initializeViewModels() {
+        weatherViewModel = new ViewModelProvider(this).get(WeatherViewModel.class);
+        forecastViewModel = new ViewModelProvider(this).get(ForecastViewModel.class);
+        sunViewModel = new ViewModelProvider(this).get(SunViewModel.class);
+        moonViewModel = new ViewModelProvider(this).get(MoonViewModel.class);
     }
 
     public String getCity() {
