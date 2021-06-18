@@ -86,16 +86,7 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(navView, navController);
 
-        String favCityListStr = readFromFile("favCities");
-        favCityListStr = favCityListStr.replace("]", "");
-        favCityListStr = favCityListStr.replace("[", "");
-        favCityListStr = favCityListStr.replace("\n", "");
-        System.out.println("1--------------------- " + favCityListStr);
-        //String[] temp = new ArrayList<>(Arrays.asList(favCityListStr.split(", ")));
-        String[] temp = favCityListStr.split(", ");
-        favCityList.addAll(Arrays.asList(temp).subList(1, temp.length));
-
-
+        readFavouriteCitiesFromFile();
         toggle = (ToggleButton) findViewById(R.id.unitsSwitch);
         initializeViewModels();
         requestQueue = SingletonQueue.getInstance(getApplicationContext());
@@ -104,17 +95,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void buttonConfirmSettingsClick(View view) {
-        EditText cityEditText = findViewById(R.id.edit_text_city);
-        city = cityEditText.getText().toString();
-        getWeatherDetails();
-        closeKeyboard();
+    private void readFavouriteCitiesFromFile() {
+        String favCityListStr = readFromFile("favCities");
+        favCityListStr = favCityListStr.replace("]", "");
+        favCityListStr = favCityListStr.replace("[", "");
+        favCityListStr = favCityListStr.replace("\n", "");
+        String[] temp = favCityListStr.split(", ");
+        favCityList.removeIf(n -> (!n.equals("Select favourite city")));
+        favCityList.addAll(Arrays.asList(temp).subList(1, temp.length));
     }
-
-//    public void buttonSelectCityClick(View view) {
-//        EditText cityEditText = findViewById(R.id.edit_text_city);
-//        city = cityEditText.getText().toString();
-//    }
 
     public void buttonAddCityClick(View view) {
         EditText cityEditText = findViewById(R.id.edit_text_city);
@@ -149,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
             city = cityEditText.getText().toString();
             getWeatherDetails();
         }
+        closeKeyboard();
     }
 
     public void refreshClick(View view) {
@@ -283,7 +273,6 @@ public class MainActivity extends AppCompatActivity {
         pressure = jsonObjectMain.getInt("pressure");
         wind = jsonObjectWind.getInt("speed");
         humidity = jsonObjectMain.getInt("humidity");
-        System.out.println(jsonResponse);
 
 
         sunViewModel.setCity(new MutableLiveData<>(city));
@@ -416,6 +405,4 @@ public class MainActivity extends AppCompatActivity {
     public double getLat() {
         return lat;
     }
-
-
 }

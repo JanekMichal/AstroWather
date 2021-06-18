@@ -41,6 +41,47 @@ public class WeatherFragment extends Fragment {
         settingsViewModel = new ViewModelProvider(requireActivity()).get(SettingsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_weather, container, false);
 
+        initializeViews(root);
+
+        if (MainActivity.astronomyCalculator == null) {
+            deviceTimeWeatherTextView.setText(R.string.settings_not_set);
+        } else {
+            if (MainActivity.unit.equals("C")) {
+                setTempsCelsius(weatherViewModel);
+            } else {
+                setTempsFahrenheit(weatherViewModel);
+
+
+            }
+            runTimers();
+            updateTime();
+        }
+        return root;
+    }
+
+    private void setTempsFahrenheit(WeatherViewModel weatherViewModel) {
+        cityTextView.setText(weatherViewModel.getCity().getValue());
+        conditionTextView.setText(weatherViewModel.getDescription().getValue());
+        temperatureTextView.setText(weatherViewModel.getTemp().getValue() * 1.8 + 32 + "°F");
+        lowTempTextView.setText(weatherViewModel.getTempMin().getValue() * 1.8 + 32 + "°F");
+        highTempTextView.setText(weatherViewModel.getTempMax().getValue() * 1.8 + 32 + "°F");
+        pressureTextView.setText(weatherViewModel.getPressure().getValue() * 2088.5 + "psf");
+        windSpeedTextView.setText(weatherViewModel.getWind().getValue() * 3.2808 + "ft/s");
+        humidityTextView.setText(weatherViewModel.getHumidity().getValue() + "%");
+    }
+
+    private void setTempsCelsius(WeatherViewModel weatherViewModel) {
+        cityTextView.setText(weatherViewModel.getCity().getValue());
+        conditionTextView.setText(weatherViewModel.getDescription().getValue());
+        temperatureTextView.setText(weatherViewModel.getTemp().getValue() + "°C");
+        lowTempTextView.setText(weatherViewModel.getTempMin().getValue() + "°C");
+        highTempTextView.setText(weatherViewModel.getTempMax().getValue() + "°C");
+        pressureTextView.setText(weatherViewModel.getPressure().getValue() + "hPa");
+        windSpeedTextView.setText(weatherViewModel.getWind().getValue() + "m/s");
+        humidityTextView.setText(weatherViewModel.getHumidity().getValue() + "%");
+    }
+
+    private void initializeViews(View root) {
         cityTextView = root.findViewById(R.id.text_city_weather);
         deviceTimeWeatherTextView = root.findViewById(R.id.text_device_time_weather);
         conditionTextView = root.findViewById(R.id.text_condition_value);
@@ -50,48 +91,6 @@ public class WeatherFragment extends Fragment {
         pressureTextView = root.findViewById(R.id.text_pressure_value);
         windSpeedTextView = root.findViewById(R.id.text_wind_speed_value);
         humidityTextView = root.findViewById(R.id.text_humidity_value);
-
-
-        updateWeatherInfo(weatherViewModel);
-
-        settingsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                updateWeatherInfo(weatherViewModel);
-            }
-        });
-
-        return root;
-    }
-
-    private void updateWeatherInfo(WeatherViewModel weatherViewModel) {
-        if (MainActivity.astronomyCalculator == null) {
-            deviceTimeWeatherTextView.setText(R.string.settings_not_set);
-        } else if (MainActivity.unit.equals("C")) {
-            cityTextView.setText(weatherViewModel.getCity().getValue());
-            conditionTextView.setText(weatherViewModel.getDescription().getValue());
-            temperatureTextView.setText(weatherViewModel.getTemp().getValue() + "°C");
-            lowTempTextView.setText(weatherViewModel.getTempMin().getValue() + "°C");
-            highTempTextView.setText(weatherViewModel.getTempMax().getValue() + "°C");
-            pressureTextView.setText(weatherViewModel.getPressure().getValue() + "hPa");
-            windSpeedTextView.setText(weatherViewModel.getWind().getValue() + "m/s");
-            humidityTextView.setText(weatherViewModel.getHumidity().getValue() + "%");
-
-            runTimers();
-            updateTime();
-        } else {
-            cityTextView.setText(weatherViewModel.getCity().getValue());
-            conditionTextView.setText(weatherViewModel.getDescription().getValue());
-            temperatureTextView.setText(weatherViewModel.getTemp().getValue() * 1.8 + 32 + "°F");
-            lowTempTextView.setText(weatherViewModel.getTempMin().getValue() * 1.8 + 32 + "°F");
-            highTempTextView.setText(weatherViewModel.getTempMax().getValue() * 1.8 + 32 + "°F");
-            pressureTextView.setText(weatherViewModel.getPressure().getValue() * 2088.5 + "psf");
-            windSpeedTextView.setText(weatherViewModel.getWind().getValue() * 3.2808 + "ft/s");
-            humidityTextView.setText(weatherViewModel.getHumidity().getValue() + "%");
-
-            runTimers();
-            updateTime();
-        }
     }
 
 

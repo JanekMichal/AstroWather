@@ -61,7 +61,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         spinnerTime.setOnItemSelectedListener(this);
 
 
-
         Spinner spinnerFavouriteCity = root.findViewById(R.id.spinner_fav_city);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(requireContext(),
                 android.R.layout.simple_spinner_item, favCityList);
@@ -69,13 +68,13 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         spinnerFavouriteCity.setOnItemSelectedListener(this);
 
 
-
         initializeViews(root);
 
         runTimers();
         updateTime();
-        updateMoonInfo();
-
+        if (MainActivity.astronomyCalculator != null) {
+            updateMoonInfo();
+        }
         return root;
     }
 

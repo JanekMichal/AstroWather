@@ -58,6 +58,72 @@ public class ForecastFragment extends Fragment {
         forecastViewModel = new ViewModelProvider(requireActivity()).get(ForecastViewModel.class);
         View root = inflater.inflate(R.layout.fragment_forecast, container, false);
 
+        initializeViews(root);
+
+        forecastViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+
+            if (MainActivity.astronomyCalculator == null) {
+                deviceTimeTextView.setText(R.string.settings_not_set);
+            } else {
+                if (MainActivity.unit.equals("C")) {
+                    setTempsCelsius();
+                } else {
+                    setTempsFahrenheit();
+                }
+                setIcons();
+                setDayNames();
+
+                cityTextView.setText(forecastViewModel.getCity().getValue());
+
+                runTimers();
+                updateTime();
+
+            }
+        });
+        return root;
+    }
+
+    private void setTempsFahrenheit() {
+        dayOneValueTextView.setText(forecastViewModel.getDayOneTemp().getValue() * 1.8 + 32 + "°F");
+        dayTwoValueTextView.setText(forecastViewModel.getDayTwoTemp().getValue() * 1.8 + 32 + "°F");
+        dayThreeValueTextView.setText(forecastViewModel.getDayThreeTemp().getValue() * 1.8 + 32 + "°F");
+        dayFourValueTextView.setText(forecastViewModel.getDayFourTemp().getValue() * 1.8 + 32 + "°F");
+        dayFiveValueTextView.setText(forecastViewModel.getDayFiveTemp().getValue() * 1.8 + 32 + "°F");
+        daySixValueTextView.setText(forecastViewModel.getDaySixTemp().getValue() * 1.8 + 32 + "°F");
+        daySevenValueTextView.setText(forecastViewModel.getDaySevenTemp().getValue() * 1.8 + 32 + "°F");
+    }
+
+    private void setTempsCelsius() {
+        dayOneValueTextView.setText(forecastViewModel.getDayOneTemp().getValue() + "°C");
+        dayTwoValueTextView.setText(forecastViewModel.getDayTwoTemp().getValue() + "°C");
+        dayThreeValueTextView.setText(forecastViewModel.getDayThreeTemp().getValue() + "°C");
+        dayFourValueTextView.setText(forecastViewModel.getDayFourTemp().getValue() + "°C");
+        dayFiveValueTextView.setText(forecastViewModel.getDayFiveTemp().getValue() + "°C");
+        daySixValueTextView.setText(forecastViewModel.getDaySixTemp().getValue() + "°C");
+        daySevenValueTextView.setText(forecastViewModel.getDaySevenTemp().getValue() + "°C");
+    }
+
+    private void setDayNames() {
+        dayOneTextView.setText(forecastViewModel.getDayOneName().getValue());
+        dayTwoTextView.setText(forecastViewModel.getDayTwoName().getValue());
+        dayThreeTextView.setText(forecastViewModel.getDayThreeName().getValue());
+        dayFourTextView.setText(forecastViewModel.getDayFourName().getValue());
+        dayFiveTextView.setText(forecastViewModel.getDayFiveName().getValue());
+        daySixTextView.setText(forecastViewModel.getDaySixName().getValue());
+        daySevenTextView.setText(forecastViewModel.getDaySevenName().getValue());
+    }
+
+    private void setIcons() {
+        setWeatherIcon(dayOneIcon, forecastViewModel.getDayOneIcon().getValue());
+        setWeatherIcon(dayTwoIcon, forecastViewModel.getDayTwoIcon().getValue());
+        setWeatherIcon(dayThreeIcon, forecastViewModel.getDayThreeIcon().getValue());
+        setWeatherIcon(dayFourIcon, forecastViewModel.getDayFourIcon().getValue());
+        setWeatherIcon(dayFiveIcon, forecastViewModel.getDayFiveIcon().getValue());
+        setWeatherIcon(daySixIcon, forecastViewModel.getDaySixIcon().getValue());
+        setWeatherIcon(daySevenIcon, forecastViewModel.getDaySevenIcon().getValue());
+    }
+
+    private void initializeViews(View root) {
         dayOneTextView = root.findViewById(R.id.forecast_day_1);
         dayTwoTextView = root.findViewById(R.id.forecast_day_2);
         dayThreeTextView = root.findViewById(R.id.forecast_day_3);
@@ -87,55 +153,6 @@ public class ForecastFragment extends Fragment {
 
         deviceTimeTextView = root.findViewById(R.id.text_device_time_forecast);
         cityTextView = root.findViewById(R.id.text_city_forecast);
-
-        forecastViewModel.getText().observe(getViewLifecycleOwner(), s -> {
-
-            if (MainActivity.astronomyCalculator == null) {
-                deviceTimeTextView.setText(R.string.settings_not_set);
-            } else {
-                if (MainActivity.unit.equals("C")) {
-                    dayOneValueTextView.setText(forecastViewModel.getDayOneTemp().getValue() + "°C");
-                    dayTwoValueTextView.setText(forecastViewModel.getDayTwoTemp().getValue() + "°C");
-                    dayThreeValueTextView.setText(forecastViewModel.getDayThreeTemp().getValue() + "°C");
-                    dayFourValueTextView.setText(forecastViewModel.getDayFourTemp().getValue() + "°C");
-                    dayFiveValueTextView.setText(forecastViewModel.getDayFiveTemp().getValue() + "°C");
-                    daySixValueTextView.setText(forecastViewModel.getDaySixTemp().getValue() + "°C");
-                    daySevenValueTextView.setText(forecastViewModel.getDaySevenTemp().getValue() + "°C");
-                } else {
-                    dayOneValueTextView.setText(forecastViewModel.getDayOneTemp().getValue() * 1.8 + 32 + "°F");
-                    dayTwoValueTextView.setText(forecastViewModel.getDayTwoTemp().getValue() * 1.8 + 32 + "°F");
-                    dayThreeValueTextView.setText(forecastViewModel.getDayThreeTemp().getValue() * 1.8 + 32 + "°F");
-                    dayFourValueTextView.setText(forecastViewModel.getDayFourTemp().getValue() * 1.8 + 32 + "°F");
-                    dayFiveValueTextView.setText(forecastViewModel.getDayFiveTemp().getValue() * 1.8 + 32 + "°F");
-                    daySixValueTextView.setText(forecastViewModel.getDaySixTemp().getValue() * 1.8 + 32 + "°F");
-                    daySevenValueTextView.setText(forecastViewModel.getDaySevenTemp().getValue()* 1.8 + 32 + "°F");
-                }
-
-                setWeatherIcon(dayOneIcon, forecastViewModel.getDayOneIcon().getValue());
-                setWeatherIcon(dayTwoIcon, forecastViewModel.getDayTwoIcon().getValue());
-                setWeatherIcon(dayThreeIcon, forecastViewModel.getDayThreeIcon().getValue());
-                setWeatherIcon(dayFourIcon, forecastViewModel.getDayFourIcon().getValue());
-                setWeatherIcon(dayFiveIcon, forecastViewModel.getDayFiveIcon().getValue());
-                setWeatherIcon(daySixIcon, forecastViewModel.getDaySixIcon().getValue());
-                setWeatherIcon(daySevenIcon, forecastViewModel.getDaySevenIcon().getValue());
-
-
-                dayOneTextView.setText(forecastViewModel.getDayOneName().getValue());
-                dayTwoTextView.setText(forecastViewModel.getDayTwoName().getValue());
-                dayThreeTextView.setText(forecastViewModel.getDayThreeName().getValue());
-                dayFourTextView.setText(forecastViewModel.getDayFourName().getValue());
-                dayFiveTextView.setText(forecastViewModel.getDayFiveName().getValue());
-                daySixTextView.setText(forecastViewModel.getDaySixName().getValue());
-                daySevenTextView.setText(forecastViewModel.getDaySevenName().getValue());
-
-                cityTextView.setText(forecastViewModel.getCity().getValue());
-
-                runTimers();
-                updateTime();
-
-            }
-        });
-        return root;
     }
 
 
@@ -186,6 +203,13 @@ public class ForecastFragment extends Fragment {
         Runnable updateTask = new Runnable() {
             @Override
             public void run() {
+                setDayNames();
+                setIcons();
+                if (MainActivity.unit.equals("C")) {
+                    setTempsCelsius();
+                } else {
+                    setTempsFahrenheit();
+                }
                 handler.postDelayed(this, MainActivity.refreshRate.longValue() * 1000);
             }
         };

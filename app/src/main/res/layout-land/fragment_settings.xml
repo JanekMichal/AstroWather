@@ -7,9 +7,6 @@
     android:background="@drawable/blue_background"
     tools:context=".ui.settings.SettingsFragment">
 
-
-
-
     <TextView
         android:id="@+id/text_settings"
         style="@style/light_text"
@@ -62,33 +59,69 @@
             android:onClick="setOnCheckedChangeListener"
             />
 
+
     </RadioGroup>
+
+    <Spinner
+        android:id="@+id/spinner_fav_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="150dp"
+        android:layout_toRightOf="@+id/spinner_time"
+        android:layout_marginTop="20dp" />
 
     <Button
         android:id="@+id/button_add_city"
-        android:layout_width="150dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/layout_radio_buttons"
 
-        android:layout_marginStart="200dp"
-
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/dark_blue"
-        android:onClick="buttonConfirmSettingsClick"
-        android:text="@string/confirm" />
+        android:onClick="buttonAddCityClick"
+        android:text="add city to favourite" />
+
+    <Button
+        android:id="@+id/button_remove_city"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_radio_buttons"
+        android:layout_toRightOf="@+id/button_add_city"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/dark_blue"
+        android:onClick="buttonRemoveCityClick"
+        android:text="remove all city favourite cities" />
+
+    <Button
+        android:id="@+id/button_execute"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/button_remove_city"
+        android:layout_below="@+id/layout_radio_buttons"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:backgroundTint="@color/dark_blue"
+        android:onClick="buttonExecuteClick"
+        android:text="Execute" />
 
 
     <Button
-        android:layout_width="150dp"
+        android:layout_width="160dp"
+        android:layout_toRightOf="@+id/button_execute"
         android:layout_height="wrap_content"
-
+        android:layout_below="@+id/layout_radio_buttons"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="250dp"
-
-        android:layout_toEndOf="@+id/button_add_city"
+        android:layout_marginTop="10dp"
         android:backgroundTint="@color/dark_blue"
-        android:onClick="useDefaultCoordinates"
-        android:text="@string/use_default" />
+        android:onClick="refreshClick"
+        android:layout_marginLeft="30dp"
+        android:text="Refresh" />
 
 
 </RelativeLayout>
