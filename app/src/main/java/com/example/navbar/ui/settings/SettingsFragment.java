@@ -86,7 +86,6 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
                 MainActivity.city = favCityList.get(position);
                 if (position != 0) {
                     Toast.makeText(requireContext(), "City selected: " + favCityList.get(position), Toast.LENGTH_SHORT).show();
-
                 }
                 break;
 

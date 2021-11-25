@@ -70,12 +70,18 @@ public class MainActivity extends AppCompatActivity {
     JSONObject jsonResponse;
     JSONObject jsonResponseForecast;
 
+    String query;
+
     ForecastViewModel forecastViewModel;
     WeatherViewModel weatherViewModel;
     MoonViewModel moonViewModel;
     SunViewModel sunViewModel;
 
     ToggleButton toggle;
+    EditText cityEditText;
+    EditText latEditText;
+    EditText lonEditText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,21 +129,33 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.addToRequestQueue(stringRequest);
     }
 
-
-
     public void buttonRemoveCityClick(View view) {
-        favCityList.removeIf(n -> (!n.equals("Select favourite city")));
+        favCityList.removeIf(n -> (n.equals(city)));
         writeToFile(favCityList.toString(), "favCities");
     }
 
     public void buttonExecuteClick(View view) {
-        EditText cityEditText = findViewById(R.id.edit_text_city);
-        if (cityEditText.getText().toString().equals("")) {
-            getWeatherDetails();
-        } else {
+        cityEditText = findViewById(R.id.edit_text_city);
+
+        latEditText = findViewById(R.id.edit_lat);
+        lonEditText = findViewById(R.id.edit_lon);
+        //lat 35
+        //lon 139
+        System.out.println(cityEditText.getText().toString());
+
+        if (!cityEditText.getText().toString().equals("")) {
+        //if (!latEditText.getText().toString().equals("") && !lonEditText.getText().toString().equals("")) {
             city = cityEditText.getText().toString();
-            getWeatherDetails();
+            query = WEATHER_API_PATH + "?q=" + cityEditText.getText().toString() + "&units=metric&APPID=" + API_KEY;
+        } else if (!latEditText.getText().toString().equals("") && !lonEditText.getText().toString().equals("")){
+            query = WEATHER_API_PATH + "?lat=" + latEditText.getText().toString() + "&lon=" + lonEditText.getText().toString()
+                    + "&units=metric&APPID=" + API_KEY;
+        } else {
+            query = WEATHER_API_PATH + "?q=" + city + "&units=metric&APPID=" + API_KEY;
         }
+
+        getWeatherDetails();
+
         closeKeyboard();
     }
 
@@ -225,7 +243,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getWeatherDetails() {
-        String query = WEATHER_API_PATH + "?q=" + city + "&units=metric&APPID=" + API_KEY;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, query,
                 response -> {

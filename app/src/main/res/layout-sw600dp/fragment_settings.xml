@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-
         android:text="@string/enter_new_location"
         android:textSize="25dp" />
 
@@ -24,9 +23,33 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/text_settings"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="150dp"
         android:layout_marginTop="0dp"
         android:hint="@string/city"
+        android:textColorHint="@color/almost_white" />
+
+    <EditText
+        android:id="@+id/edit_lat"
+        style="@style/light_text"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="50dp"
+        android:layout_below="@+id/text_settings"
+        android:layout_toRightOf="@+id/edit_text_city"
+        android:hint="lat"
+        android:textColorHint="@color/almost_white" />
+
+    <EditText
+        android:id="@+id/edit_lon"
+        style="@style/light_text"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text_settings"
+
+        android:layout_toRightOf="@+id/edit_lat"
+        android:layout_marginLeft="50dp"
+        android:hint="lon"
         android:textColorHint="@color/almost_white" />
 
     <Spinner
