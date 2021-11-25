@@ -8,6 +8,7 @@ You can type city you want to check weather in, or you can type coordinates. The
 <img src="Screenshots/Screenshot_1637848376.png" width="200">
 
 Informations about weather are on the next pages.
+<br>
 <img src="Screenshots/Screenshot_1637848379.png" width="200"><img src="Screenshots/Screenshot_1637848381.png" width="200"><img src="Screenshots/Screenshot_1637848384.png" width="200"><img src="Screenshots/Screenshot_1637848387.png" width="200">
 
 ## Features
